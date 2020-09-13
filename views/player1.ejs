@@ -1,0 +1,285 @@
+<html>
+	<head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="style.css" >
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+        <script src="players.js"></script>
+    	<title>DnZ - Player 1</title>
+        <style>
+            body{
+                font-size: 1.5rem!important;
+            }
+            /*.fullLength{
+                height: 50vh;
+            }*/
+
+            .headerRow>li{
+                width: 20%;
+            }
+
+            .headerTab0{ /*red*/
+                color: #fff;
+                background-color: #fc0303;
+                border-color: #fc0303;
+            }
+
+            .colorSet0{
+                color: #fc0303!important;
+            }
+
+            .headerTab1{ /*blue*/
+                color: #fff;
+                background-color: #007bff;
+                border-color: #007bff;
+            }
+
+            .colorSet1{
+                color: #007bff!important;
+            }
+
+            .headerTab2{ /*green*/
+                color: #fff;
+                background-color: #249c19;
+                border-color: #249c19;
+            }
+
+            .colorSet2{
+                color: #249c19!important;
+            }
+
+            .headerTab3{ /*purple*/
+                color: #fff;
+                background-color: #861aad;
+                border-color: #861aad;
+            }
+
+            .colorSet3{
+                color: #861aad!important;
+            }
+
+            .diceImage{
+                border:none;
+                mix-blend-mode: multiply;
+            }
+
+            .usedUp{
+                text-decoration: line-through;
+            }
+
+            #featName{
+                font-weight: bold;
+            }
+        </style>
+	</head>
+    <body>
+        <!--login popup-->
+        <div id="loginModal" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Player Login</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">
+                                    Enter Player ID Number:
+                                </span>
+                            </div>
+                            <input id="inputId" type="text" class="form-control" aria-label="" aria-describedby="inputGroup-sizing-default">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onClick="login()">Let's Play!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Main page-->
+        <div id="accordion">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-link sectionHeader" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Home
+                </button>
+              </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse show fullLength" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                    <div id="playerName" class="sectionHeader"></div>
+                    <div id="healthBar"></div>
+                    <div id="characterDescription"></div>
+                    <div id="rollBar">
+                        <button class="btn btn-outline-success" onClick="roll()"><img src="dice.png" class="img-thumbnail diceImage"></button>
+                    </div>
+                    <div id="featName"></div>
+                    <div id="featDescription"></div>
+                </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed sectionHeader" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Inventory
+                </button>
+              </h5>
+            </div>
+            <div id="collapseTwo" class="collapse fullLength" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <ul id="inventoryList" class="list-group list-group-flush">
+                        <li class="list-group-item headerTab">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item headerTab">Item</li>
+                                <li class="list-group-item headerTab">Ammo/Count</li>
+                                <li class="list-group-item headerTab">Hit Bonus</li>
+                                <li class="list-group-item headerTab">Damage</li>
+                            </ul>
+                        </li><!--
+                        <li class="list-group-item">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item">Pistol</li>
+                                <li class="list-group-item">10 rounds</li>
+                                <li class="list-group-item">
+                                    <button type="button" class="btn btn-outline-success" onClick="attack(3)">
+                                        +3
+                                    </button>
+                                </li>
+                                <li class="list-group-item">
+                                    <button type="button" class="btn btn-outline-danger" onClick="damage(1,6)">
+                                        1d6
+                                    </button>
+                                </li>
+                            </ul>
+                        </li>-->
+                    </ul>
+                </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed sectionHeader" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Stats
+                </button>
+              </h5>
+            </div>
+            <div id="collapseThree" class="collapse fullLength" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item headerTab">Race:</li>
+                                <li class="list-group-item">Human</li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item headerTab">Class:</li>
+                                <li class="list-group-item">Survivor</li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item headerTab">Health:</li>
+                                <li class="list-group-item">
+                                    <span id="currHit">TBD</span> / <span id="maxHit">TBD</span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item headerTab">Strength:</li>
+                                <li id="strengthVal" class="list-group-item">TBD</li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item headerTab">Dexterity:</li>
+                                <li id="dexterityVal" class="list-group-item">TBD</li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item headerTab">Constitution:</li>
+                                <li id="constitutionVal" class="list-group-item">TBD</li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item headerTab">Intelligence:</li>
+                                <li id="intelligenceVal" class="list-group-item">TBD</li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item headerTab">Wisdom:</li>
+                                <li id="wisdomVal" class="list-group-item">TBD</li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item headerTab">Charisma:</li>
+                                <li id="charismaVal" class="list-group-item">TBD</li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item headerTab">Feat:</li>
+                                <li class="list-group-item"><span id="featVal">TBD</span></li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item headerTab">Skill:</li>
+                                <li class="list-group-item"><span id="skill1">TBD</span></li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item headerTab">Skill:</li>
+                                <li class="list-group-item"><span id="skill2">TBD</span></li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <ul class="list-group list-group-horizontal headerRow">
+                                <li class="list-group-item headerTab">Skill:</li>
+                                <li class="list-group-item"><span id="skill3">TBD</span></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+          </div>
+          <!--
+          <div class="card">
+            <div class="card-header" id="headingFour">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed sectionHeader" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                  Messages
+                </button>
+              </h5>
+            </div>
+            <div id="collapseFour" class="collapse fullLength" aria-labelledby="headingFour" data-parent="#accordion">
+              <div class="card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+              </div>
+            </div>
+          </div>
+      -->
+        </div>
+    </body>
+    <script>
+        $( document ).ready(function() {
+            $('#loginModal').modal('show');
+        });
+    </script>
+</html>

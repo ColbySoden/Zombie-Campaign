@@ -1,0 +1,453 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" const="text/html;charset=UTF-8" />
+		<title>Character Setup - <%= name %></title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<style>
+			option:disabled {
+				background-color: red;
+			}
+
+			#skillFeedback{
+				color: red;
+			}
+
+			#abilityFeedback{
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-10">
+					<form>
+						<div class="form-group row">
+					    	<label for="inputName" class="col-sm-2 col-form-label">Character Name</label>
+					    	<div class="col-sm-10">
+					      		<input type="text" class="form-control" id="inputName" placeholder="...">
+					    	</div>
+					    	<input type="hidden" id="playerName" name="playername" value="<%= name %>">
+					  	</div>
+					  	<div class="form-group row">
+						    <label for="inputRace" class="col-sm-2 col-form-label">Race</label>
+						    <div id="inputRace" class="col-sm-10">
+						    	Human
+						    </div>
+					  	</div>
+					  	<div class="form-group row">
+						    <label for="inputclass" class="col-sm-2 col-form-label">Class</label>
+						    <div id="inputClass" class="col-sm-10">
+						    	Survivor
+						    </div>
+					  	</div>
+					  	<div class="form-group row">
+					    	<label for="inputDesc" class="col-sm-2 col-form-label">Character Background</label>
+					    	<div class="col-sm-10">
+					      		<textarea class="form-control" id="inputDesc" rows="3"></textarea>
+					    	</div>
+					  	</div>
+					  	<fieldset class="form-group">
+					    	<div class="row">
+						      	<legend class="col-form-label col-sm-2 pt-0">Choose One Feat</legend>
+						      	<div class="col-sm-5">
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput1" value="actor" checked>
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput1" title="Skilled at mimicry and dramatics">
+					            			Actor
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput2" value="alert">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput2" title="Always on the lookout for danger">
+					            			Alert
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput3" value="athelete">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput3" title="You have undergone extensive physical training">
+					            			Athelete
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput4" value="charger">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput4" title="When you use your action to Dash, you can use a bonus action to make one melee weapon attack or to shove a creature.">
+					            			Charger
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput5" value="firearmsExpert">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput5" title="Thanks to extensive practice with firearms">
+					            			Firearms Expert
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput6" value="dualWielder">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput6" title="You master fighting with two weapons">
+					            			Dual Wielder
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput7" value="dungeonDelver">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput7" title="Alert to the hidden traps and secret doors">
+					            			Dungeon Delver
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput8" value="durable">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput8" title="Hardy and resilient">
+					            			Durable
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput9" value="greatWeaponMaster">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput9" title="You’ve learned to put the weight of a weapon to your advantage, letting its momentum empower your strikes.">
+					            			Great Weapon Master
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput10" value="healer">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput10" title="You are an able physician, allowing you to mend wounds quickly and get your allies back in the fight.">
+					            			Healer
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput11" value="keenMind">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput11" title="You have a mind that can track time, direction, and detail with uncanny precision.">
+					            			Keen Mind
+					          			</label>
+					        		</div>
+					        	</div>
+					        	<div class="col-sm-5">
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput12" value="linguist">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput12" title="You have studied languages and codes">
+					            			Linguist
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput13" value="lucky">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput13" title="You have inexplicable luck that seems to kick in at just the right moment.">
+					            			Lucky
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput14" value="mobile">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput14" title="You are exceptionally speedy and agile.">
+					            			Mobile
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput15" value="mountedCombatant">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput15" title="You are a dangerous foe to face while mounted.">
+					            			Mounted Combatant
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput16" value="observant">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput16" title="Quick to notice details of your environment">
+					            			Observant
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput17" value="polearmMaster">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput17" title="You can keep your enemies at bay with reach weapons.">
+					            			Polearm Master
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput18" value="savageAttacker">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput18" title="Once per turn when you roll damage for a melee weapon attack, you can reroll the weapon’s damage dice and use either total.">
+					            			Savage Attacker
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput19" value="sentinel">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput19" title="You have mastered techniques to take advantage of every drop in any enemy’s guard">
+					            			Sentinel
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput20" value="sharpshooter">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput20" title="You have mastered ranged weapons and can make shots that others find impossible.">
+					            			Sharpshooter
+					          			</label>
+					        		</div>
+					        		<div class="form-check">
+					          			<input class="form-check-input" type="radio" name="featInput" id="featInput21" value="tavernBrawler">
+					          			<label class="form-check-label" data-toggle="tooltip" data-placement="right" for="featInput21" title="Accustomed to rough-and-tumble fighting using whatever weapons happen to be at hand">
+					            			Tavern Brawler
+					          			</label>
+					        		</div>
+					      		</div>
+					    	</div>
+					  	</fieldset>
+					  	<div id="skills" class="form-group row">
+					    	<div class="col-sm-2">
+					    		<div>Choose Three Skills</div>
+					    		<div id="skillFeedback"></div>
+					    	</div>
+					    	<div class="col-sm-5">
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills1">
+					        		<label class="form-check-label" for="inputSkills1">
+					          			Acrobatics
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills2">
+					        		<label class="form-check-label" for="inputSkills2">
+					          			Athletics
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills3">
+					        		<label class="form-check-label" for="inputSkills3">
+					          			Animal Handling
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills4">
+					        		<label class="form-check-label" for="inputSkills4">
+					          			Deception
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills5">
+					        		<label class="form-check-label" for="inputSkills5">
+					          			Engineering
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills6">
+					        		<label class="form-check-label" for="inputSkills6">
+					          			History
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills7">
+					        		<label class="form-check-label" for="inputSkills7">
+					          			Insight
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills8">
+					        		<label class="form-check-label" for="inputSkills8">
+					          			Intimidation
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills9">
+					        		<label class="form-check-label" for="inputSkills9">
+					          			Investigation
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills10">
+					        		<label class="form-check-label" for="inputSkills10">
+					          			Medicine
+					        		</label>
+					      		</div>
+					      	</div>
+					      	<div class="col-sm-5">
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills11">
+					        		<label class="form-check-label" for="inputSkills11">
+					          			Mettle
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills12">
+					        		<label class="form-check-label" for="inputSkills12">
+					          			Nature
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills13">
+					        		<label class="form-check-label" for="inputSkills13">
+					          			Perception
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills14">
+					        		<label class="form-check-label" for="inputSkills14">
+					          			Performance
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills15">
+					        		<label class="form-check-label" for="inputSkills15">
+					          			Persuasion
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills16">
+					        		<label class="form-check-label" for="inputSkills16">
+					          			Sleight of Hand
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills17">
+					        		<label class="form-check-label" for="inputSkills17">
+					          			Stealth
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills18">
+					        		<label class="form-check-label" for="inputSkills18">
+					          			Survival
+					        		</label>
+					      		</div>
+					      		<div class="form-check">
+					        		<input class="form-check-input" type="checkbox" id="inputSkills19">
+					        		<label class="form-check-label" for="inputSkills19">
+					          			Technology
+					        		</label>
+					      		</div>
+					    	</div>
+					  	</div>
+					  	<div class="form-group row">
+					  		<div class="col-sm-2">
+						    	<legend class="col-form-label col-sm-2 pt-0">Abilities</legend>
+						    	<div id="abilityFeedback"></div>
+						    </div>
+					    	<div class="col-sm-3">
+					    		<label>Strength</label><br>
+					    		<select id="inputStrength" class="abilitySelector form-control form-control-md">
+					    			<option value="0">-</option>
+									<option value="8">8</option>
+									<option value="10">10</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+								</select>
+								<br><br>
+								<label>Dexterity</label><br>
+								<select id="dexterityInput" class="abilitySelector form-control form-control-md">
+									<option value="0">-</option>
+									<option value="8">8</option>
+									<option value="10">10</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+								</select>
+							</div>
+							<div class="col-sm-3">
+								<label>Constitution</label><br>
+								<select id="constitutionInput" class="abilitySelector form-control form-control-md">
+									<option value="0">-</option>
+									<option value="8">8</option>
+									<option value="10">10</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+								</select>
+								<br><br>
+								<label>Intelligence</label><br>
+								<select id="intelligenceInput" class="abilitySelector form-control form-control-md">
+									<option value="0">-</option>
+									<option value="8">8</option>
+									<option value="10">10</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+								</select>
+							</div>
+							<div class="col-sm-3">
+								<label>Wisdom</label><br>
+								<select id="wisdomInput" class="abilitySelector form-control form-control-md">
+									<option value="0">-</option>
+									<option value="8">8</option>
+									<option value="10">10</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+								</select>
+								<br><br>
+								<label>Charisma</label><br>
+								<select id="charismaInput" class="abilitySelector form-control form-control-md">
+									<option value="0">-</option>
+									<option value="8">8</option>
+									<option value="10">10</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+								</select>
+					    	</div>
+					    </div>
+					    <div class="form-group row">
+					    	<legend class="col-form-label col-sm-2 pt-0">Equipment</legend>
+					    	<div class="col-sm-10">
+					    		<div class="row">
+					    			<div class="col-sm-3">
+					    				<div class="form-check">
+						          			<input class="form-check-input" type="radio" name="equipmentInput1" id="dagger" value="dagger" checked>
+						          			<label class="form-check-label" for="dagger">
+						            			A small dagger
+						          			</label>
+						          		</div>
+					        		</div>
+					    			<div class="col-sm-1">
+					    				-OR-
+					    			</div>
+					    			<div class="col-sm-3">
+					    				<div class="form-check">
+						          			<input class="form-check-input" type="radio" name="equipmentInput1" id="melee1" value="melee1">
+						          			<label class="form-check-label" for="melee1">
+						            			Melee Weapon
+						          			</label>
+						          		</div>
+					    			</div>
+					    		</div>
+					    		<div class="row">
+					    			<div class="col-sm-3">
+					    				<div class="form-check">
+						          			<input class="form-check-input" type="radio" name="equipmentInput2" id="pistol" value="pistol" checked>
+						          			<label class="form-check-label" for="pistol">
+						            			Pistol + 10 rounds
+						          			</label>
+						          		</div>
+					        		</div>
+					    			<div class="col-sm-1">
+					    				-OR-
+					    			</div>
+					    			<div class="col-sm-3">
+					    				<div class="form-check">
+						          			<input class="form-check-input" type="radio" name="equipmentInput2" id="rifle" value="rifle" >
+						          			<label class="form-check-label" for="rifle">
+						            			Rifle + 10 rounds
+						          			</label>
+						          		</div>
+					    			</div>
+					    			<div class="col-sm-1">
+					    				-OR-
+					    			</div>
+					    			<div class="col-sm-3">
+					    				<div class="form-check">
+						          			<input class="form-check-input" type="radio" name="equipmentInput2" id="melee2" value="melee2" >
+						          			<label class="form-check-label" for="melee2">
+						            			Melee Weapon
+						          			</label>
+						          		</div>
+					    			</div>
+					    		</div>
+					    	</div>
+					    </div>
+					    <div class="form-group row">
+					    	<button id="submitButton" type="button" class="btn btn-primary">Submit</button>
+					    </div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="setup.js"></script>
+</html>

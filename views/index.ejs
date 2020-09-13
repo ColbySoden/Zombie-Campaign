@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" const="text/html;charset=UTF-8" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+		<script src="drawable.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css" >
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    	<title>DnZ</title>
+	</head>
+    <body onload="init()">
+        <canvas id="can" width="400" height="400"></canvas>
+        <div id="colorTitle">Choose Color</div>
+        <div id="green" onclick="color(this)"></div>
+        <div id="blue" onclick="color(this)"></div>
+        <div id="red" onclick="color(this)"></div>
+        <div id="yellow" onclick="color(this)"></div>
+        <div id="orange" onclick="color(this)"></div>
+        <div id="black" onclick="color(this)"></div>
+        <div id="eraser">Eraser</div>
+        <div id="white" onclick="color(this)"></div>
+        <img id="canvasimg" style="display:none;">
+        <input type="button" value="save" id="btn" size="30" onclick="save()">
+        <input type="button" value="clear" id="clr" size="23" onclick="erase()">
+    </body>
+</html>

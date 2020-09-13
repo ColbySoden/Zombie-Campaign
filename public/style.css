@@ -1,0 +1,100 @@
+canvas{
+	position:absolute;
+	top:10%;
+	left:10%;
+	border:2px solid;
+}
+
+#colorTitle{
+	position:absolute;
+	top:12%;
+	left:43%;
+}
+
+#green{
+	position:absolute;
+	top:15%;
+	left:45%;
+	width:10px;
+	height:10px;
+	background:green;
+}
+
+#blue{
+	position:absolute;
+	top:15%;
+	left:46%;
+	width:10px;
+	height:10px;
+	background:blue;
+}
+
+#red{
+	position:absolute;
+	top:15%;
+	left:47%;
+	width:10px;
+	height:10px;
+	background:red;
+}
+
+#yellow{
+	position:absolute;
+	top:17%;
+	left:45%;
+	width:10px;
+	height:10px;
+	background:yellow;
+}
+
+#orange{
+	position:absolute;
+	top:17%;
+	left:46%;
+	width:10px;
+	height:10px;
+	background:orange;
+}
+
+#black{
+	position:absolute;
+	top:17%;
+	left:47%;
+	width:10px;
+	height:10px;
+	background:black;
+}
+
+#eraser{
+	position:absolute;
+	top:20%;
+	left:43%;
+}
+
+#white{
+	position:absolute;
+	top:22%;
+	left:45%;
+	width:15px;
+	height:15px;
+	background:white;
+	border:2px solid;
+}
+
+#canvasimg{
+	position:absolute;
+	top:10%;
+	left:52%;
+}
+
+#btn{
+	position:absolute;
+	top:55%;
+	left:10%;
+}
+
+#clr{
+	position:absolute;
+	top:55%;
+	left:15%;
+}
